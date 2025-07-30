@@ -1,7 +1,11 @@
 import { useFormContext } from "react-hook-form";
+import { educationValidation } from "../utils/validationRules";
 
 export default function EducationSection() {
-  const { register, formState: { errors } } = useFormContext();
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
 
   const educationOptions = [
     "High School Only",
@@ -20,7 +24,7 @@ export default function EducationSection() {
         Part B: Education & Skills
       </h2>
 
-      {/* Education Level */}
+      {/* Education Level (Radio Buttons) */}
       <div className="mb-8">
         <label className="block font-medium text-gray-700 mb-2">
           Select your highest education level <span className="text-red-500">*</span>
@@ -31,7 +35,7 @@ export default function EducationSection() {
               <input
                 type="radio"
                 value={label}
-                {...register("educationLevel", { required: true })}
+                {...register("educationLevel", educationValidation.educationLevel)}
                 className="mt-1 accent-teal-600"
               />
               <span className="text-sm">{label}</span>
@@ -40,7 +44,7 @@ export default function EducationSection() {
         </div>
         {errors.educationLevel && (
           <p className="text-red-600 text-sm mt-2">
-            Please select your education level.
+            {errors.educationLevel.message}
           </p>
         )}
       </div>
@@ -51,11 +55,16 @@ export default function EducationSection() {
           Diploma/Professional qualifications you possess
         </label>
         <textarea
-          {...register("qualifications")}
+          {...register("qualifications", educationValidation.qualifications)}
           rows={4}
           placeholder="E.g. CPA, ACCA, Cisco, PMP..."
           className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-teal-500"
         />
+        {errors.qualifications && (
+          <p className="text-red-600 text-sm mt-1">
+            {errors.qualifications.message}
+          </p>
+        )}
       </div>
 
       {/* Other Education */}
@@ -64,11 +73,16 @@ export default function EducationSection() {
           Any other education? (Please specify)
         </label>
         <textarea
-          {...register("otherEducation")}
+          {...register("otherEducation", educationValidation.otherEducation)}
           rows={3}
           placeholder="E.g. Short courses, workshops, certifications"
           className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-teal-500"
         />
+        {errors.otherEducation && (
+          <p className="text-red-600 text-sm mt-1">
+            {errors.otherEducation.message}
+          </p>
+        )}
       </div>
 
       {/* Other Skills */}
@@ -77,11 +91,16 @@ export default function EducationSection() {
           Other skills and competencies you possess
         </label>
         <textarea
-          {...register("otherSkills")}
+          {...register("otherSkills", educationValidation.otherSkills)}
           rows={4}
           placeholder="List any other skills you possess not covered in the section above"
           className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-teal-500"
         />
+        {errors.otherSkills && (
+          <p className="text-red-600 text-sm mt-1">
+            {errors.otherSkills.message}
+          </p>
+        )}
       </div>
     </div>
   );

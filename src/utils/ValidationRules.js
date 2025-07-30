@@ -56,3 +56,12 @@ export const personalInfoValidation = {
   location: textRequired("Location"),
   country: textRequired("Country"),
 };
+
+
+// === Grouped Schema for Education Section ===
+export const educationValidation = {
+  educationLevel: selectRequired("Education level"),
+  qualifications: textareaOptional("Qualifications", 500),
+  otherEducation: textareaOptional("Other education", 300),
+  otherSkills: textareaOptional("Other skills", 500),
+};
