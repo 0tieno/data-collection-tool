@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { UploadCloud } from "lucide-react";
-import { fileValidation } from "../utils/validationRules"; // ✅ Step 1
+import { fileValidation } from "../utils/validationRules"; 
 
 export default function FileUploadSection() {
   const { register, setValue, watch, formState: { errors } } = useFormContext();

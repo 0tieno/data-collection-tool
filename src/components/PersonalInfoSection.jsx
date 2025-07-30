@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import FormInput from "./FormInput";
-import { personalInfoValidation } from "../utils/validationRules";
+import { personalInfoValidation } from "../utils/ValidationRules";
 
 export default function PersonalInfoSection() {
   const {
