@@ -1,12 +1,16 @@
-
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import LandingPage from "./pages/LandingPage";
+import FormPage from "./pages/FormPage"; // You’ll create this later
 
 function App() {
- 
   return (
-     <h1 className="text-4xl md:text-5xl font-bold mb-4 text-blue-700">
-        Aga Khan Education Services Data Portal
-      </h1>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/form" element={<FormPage />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
