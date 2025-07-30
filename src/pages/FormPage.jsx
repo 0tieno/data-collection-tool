@@ -24,7 +24,7 @@ export default function FormPage() {
             Staff Data Collection Form
           </h1>
           <p className="text-gray-600 text-base md:text-lg">
-            Kindly fill in the details below. All fields marked with{" "}
+            Kindly fill the form in one sitting. All fields marked with{" "}
             <span className="text-red-500 font-bold">*</span> are required.
           </p>
         </div>

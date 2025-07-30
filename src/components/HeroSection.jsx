@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 export default function HeroSection() {
   return (
     <section className="text-gray-800 py-20 px-6">
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
+      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
         {/* Text Content */}
         <div className="text-center md:text-left md:w-1/2 space-y-6">
           <h1 className="text-4xl md:text-5xl font-bold">
@@ -29,7 +29,7 @@ export default function HeroSection() {
           <img
             src="/images/verge-logo.png"
             alt="Verge Advisory Logo"
-            className="w-60 sm:w-72 md:w-80 object-contain drop-shadow-md"
+            className="w-60 sm:w-80 md:w-110 object-contain drop-shadow-md"
           />
         </div>
       </div>
