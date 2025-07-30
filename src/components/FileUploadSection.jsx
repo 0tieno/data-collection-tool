@@ -1,6 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { UploadCloud } from "lucide-react";
+import { fileValidation } from "../utils/validationRules"; // ✅ Step 1
 
 export default function FileUploadSection() {
   const { register, setValue, watch, formState: { errors } } = useFormContext();
@@ -35,7 +36,7 @@ export default function FileUploadSection() {
             type="file"
             accept=".pdf,.doc,.docx"
             className="hidden"
-            {...register("cv", { required: true })}
+            {...register("cv", fileValidation)} 
             onChange={(e) => {
               setValue("cv", e.target.files);
               setFileName(e.target.files?.[0]?.name || null);
@@ -50,7 +51,7 @@ export default function FileUploadSection() {
         )}
 
         {errors.cv && (
-          <p className="text-red-600 text-sm mt-2">Please upload your CV</p>
+          <p className="text-red-600 text-sm mt-2">{errors.cv.message || "Please upload your CV"}</p>
         )}
       </div>
     </div>
