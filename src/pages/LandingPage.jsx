@@ -8,7 +8,7 @@ export default function LandingPage() {
       <div className="bg-gradient-to-b from-blue-100 to-white">
   <HeroSection />
 
-  <div className="border-t border-gray-300 mx-auto max-w-6xl" />
+  {/* <div className="border-t border-gray-300 mx-auto max-w-6xl" /> */}
 
   <AboutSection />
 </div>

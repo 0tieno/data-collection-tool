@@ -7,7 +7,7 @@ export default function AboutSection() {
   ];
 
   return (
-    <section className="text-gray-800 py-20 px-6">
+    <section className="text-gray-800 py-10 px-6">
       <div className="max-w-6xl mx-auto text-center">
         <h2 className="text-3xl font-semibold mb-12">How It Works</h2>
 
