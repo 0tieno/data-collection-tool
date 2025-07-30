@@ -4,12 +4,20 @@ import PersonalInfoSection from "./PersonalInfoSection";
 import EducationSection from "./EducationSection";
 import ExperienceSection from "./ExperienceSection";
 import FileUploadSection from "./FileUploadSection";
+import StepNavigation from "./StepNavigation";
 
 const steps = ["Personal", "Education", "Experience", "Upload CV"];
 
 export default function FormWrapper() {
   const methods = useForm();
-  const { handleSubmit, watch, setValue } = methods;
+  const { handleSubmit, watch, setValue, trigger } = methods;
+
+  const stepFields = [
+    ["name", "jobTitle", "jobType", "supervisor", "department", "section", "school", "location", "country"],
+    ["educationLevel"],
+    ["experienceList", "experienceSummary"],
+    ["cv"],
+  ];
 
   const [currentStep, setCurrentStep] = useState(0);
   const isLastStep = currentStep === steps.length - 1;
@@ -19,7 +27,15 @@ export default function FormWrapper() {
     // TODO: Send to Azure Function or CosmosDB
   };
 
-  const nextStep = () => setCurrentStep((s) => Math.min(s + 1, steps.length - 1));
+  const nextStep = async () => {
+    const fieldsToValidate = stepFields[currentStep];
+    const isValid = await trigger(fieldsToValidate);
+
+    if (isValid) {
+      setCurrentStep((s) => Math.min(s + 1, steps.length - 1));
+    }
+  };
+
   const prevStep = () => setCurrentStep((s) => Math.max(s - 1, 0));
 
   return (
@@ -59,33 +75,14 @@ export default function FormWrapper() {
         )}
 
         {/* Navigation */}
-        <div className="flex justify-between">
-          <button
-            type="button"
-            onClick={prevStep}
-            disabled={currentStep === 0}
-            className="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold disabled:opacity-50"
-          >
-            Previous
-          </button>
-
-          {!isLastStep ? (
-            <button
-              type="button"
-              onClick={nextStep}
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition"
-            >
-              Next
-            </button>
-          ) : (
-            <button
-              type="submit"
-              className="px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition"
-            >
-              Submit
-            </button>
-          )}
-        </div>
+        <StepNavigation
+          currentStep={currentStep}
+          steps={steps}
+          stepFields={stepFields}
+          isLastStep={isLastStep}
+          onPrev={prevStep}
+          onNext={nextStep}
+        />
       </form>
     </FormProvider>
   );
