@@ -1,7 +1,8 @@
 export default function HeroSection() {
   return (
-    <section className="bg-gradient-to-br from-indigo-700 via-purple-700 to-pink-600 text-white py-20 px-6">
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between">
+    <section className="bg-gradient-to-br from-green-900 via-teal-800 to-blue-900
+ text-white py-20 px-6">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
         {/* Text Content */}
         <div className="text-center md:text-left md:w-1/2 space-y-6">
           <h1 className="text-4xl md:text-5xl font-bold">
@@ -18,19 +19,19 @@ export default function HeroSection() {
           </a>
         </div>
 
-        {/* Logos */}
-        <div className="mt-10 md:mt-0 md:w-1/2 flex items-center justify-center gap-6">
-          <img
-            src="/images/akes_logo.png" // Replace with your actual image path
-            alt="Aga Khan Logo"
-            className="h-16 md:h-20 object-contain"
-          />
-          <img
-            src="/images/verge-logo.png" // Replace with your actual image path
-            alt="Verge Advisory Logo"
-            className="h-16 md:h-20 object-contain"
-          />
-        </div>
+               {/* Verge Logo only */}
+<div className="flex flex-col items-center md:items-end md:w-1/2 space-y-4 px-6 md:px-0 md:pr-8">
+  <p className="text-base md:text-lg font-semibold uppercase tracking-wider text-indigo-100">
+    In Partnership With
+  </p>
+  <img
+    src="/images/verge-logo.png"
+    alt="Verge Advisory Logo"
+    className="w-60 sm:w-72 md:w-80 object-contain drop-shadow-lg"
+  />
+</div>
+
+
       </div>
     </section>
   );
