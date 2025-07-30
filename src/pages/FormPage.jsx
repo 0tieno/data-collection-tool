@@ -2,12 +2,20 @@ import FormWrapper from "../components/FormWrapper";
 
 export default function FormPage() {
   return (
-    <div className="min-h-screen bg-white text-gray-800 py-16 px-4">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-2">Staff Data Collection Form</h1>
-        <p className="text-gray-600 mb-8">
-          Please fill in the form below. All fields marked with * are required.
-        </p>
+    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-white text-gray-800 py-16 px-4">
+      <div className=" mx-auto bg-white rounded-2xl shadow-md p-8 md:p-12">
+        {/* Header */}
+        <div className="mb-8 text-center">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-teal-800 mb-2">
+            Staff Data Collection Form
+          </h1>
+          <p className="text-gray-600 text-base md:text-lg">
+            Kindly fill in the details below. All fields marked with{" "}
+            <span className="text-red-500 font-bold">*</span> are required.
+          </p>
+        </div>
+
+        {/* Form */}
         <FormWrapper />
       </div>
     </div>

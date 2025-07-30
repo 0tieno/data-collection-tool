@@ -5,7 +5,7 @@ import EducationSection from "./EducationSection";
 import ExperienceSection from "./ExperienceSection";
 import FileUploadSection from "./FileUploadSection";
 
-const steps = ["Personal Info", "Education", "Experience", "Upload CV"];
+const steps = ["Personal", "Education", "Experience", "Upload CV"];
 
 export default function FormWrapper() {
   const [currentStep, setCurrentStep] = useState(0);
