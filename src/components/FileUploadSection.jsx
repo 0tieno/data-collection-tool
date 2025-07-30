@@ -1,7 +1,9 @@
+import { useFormContext } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { UploadCloud } from "lucide-react"; // Optional icon, if using Lucide
+import { UploadCloud } from "lucide-react";
 
-export default function FileUploadSection({ register, setValue, watch, errors }) {
+export default function FileUploadSection() {
+  const { register, setValue, watch, formState: { errors } } = useFormContext();
   const [fileName, setFileName] = useState(null);
   const file = watch("cv");
 
@@ -13,7 +15,7 @@ export default function FileUploadSection({ register, setValue, watch, errors })
 
   return (
     <div>
-      <h2 className="text-xl font-semibold mb-6">Part D: Upload Your CV</h2>
+      <h2 className="text-2xl font-bold text-teal-800 mb-6">Part D: Upload Your CV</h2>
 
       <div className="mb-8">
         <label className="block text-lg font-medium text-gray-800 mb-4">
@@ -27,6 +29,7 @@ export default function FileUploadSection({ register, setValue, watch, errors })
           <UploadCloud className="w-10 h-10 text-teal-500 mb-3" />
           <p className="text-gray-700 font-semibold">Click to upload or drag & drop</p>
           <p className="text-sm text-gray-500 mt-1">PDF, DOC, or DOCX (max 5MB)</p>
+
           <input
             id="cv-upload"
             type="file"
@@ -40,14 +43,12 @@ export default function FileUploadSection({ register, setValue, watch, errors })
           />
         </label>
 
-        {/* Show file name */}
         {fileName && (
           <p className="mt-3 text-sm text-gray-700">
             Selected File: <span className="font-medium">{fileName}</span>
           </p>
         )}
 
-        {/* Validation Error */}
         {errors.cv && (
           <p className="text-red-600 text-sm mt-2">Please upload your CV</p>
         )}
