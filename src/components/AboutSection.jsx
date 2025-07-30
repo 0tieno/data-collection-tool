@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 export default function AboutSection() {
   const steps = [
     "Fill your personal and job details",
@@ -43,12 +45,12 @@ export default function AboutSection() {
         </p>
 
         {/* CTA Button */}
-        <a
-          href="/form"
+        <Link
+          to="/form"
           className="inline-block bg-blue-600 text-white font-semibold py-3 px-6 rounded-full shadow-md hover:bg-blue-700 transition"
         >
           Get Started
-        </a>
+        </Link>
       </div>
     </section>
   );
