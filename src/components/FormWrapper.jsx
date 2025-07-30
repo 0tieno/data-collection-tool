@@ -22,10 +22,60 @@ export default function FormWrapper() {
   const [currentStep, setCurrentStep] = useState(0);
   const isLastStep = currentStep === steps.length - 1;
 
-  const onSubmit = (data) => {
-    console.log("✅ Final Form Data:", data);
-    // TODO: Send to Azure Function or CosmosDB
-  };
+  const onSubmit = async (data) => {
+  const formData = new FormData();
+
+  for (const [key, value] of Object.entries(data)) {
+    if (key === "experienceList") {
+      formData.append(key, JSON.stringify(value));
+    } else if (value instanceof FileList) {
+      formData.append(key, value[0]); // Only one file
+    } else {
+      formData.append(key, value);
+    }
+  }
+
+  try {
+    const res = await fetch("http://localhost:7071/api/submit", {
+      method: "POST",
+      body: formData,
+    });
+
+    const text = await res.text(); // ← use text first
+
+    let json;
+    try {
+      json = JSON.parse(text);
+    } catch (err) {
+      console.error("❌ Response is not valid JSON:", text);
+      return;
+    }
+
+  if (!res.ok) {
+  console.error("❌ Server error:", json);
+
+  // If it's validation errors (multiple fields), format them nicely
+  if (json.errors) {
+    const messages = Object.values(json.errors).join("\n");
+    alert("Submission failed:\n" + messages);
+  } else {
+    alert("Submission failed: " + (json?.error || "Unknown error"));
+  }
+
+  return;
+}
+
+
+    console.log("✅ Success:", json);
+    alert("Submitted successfully!");
+
+  } catch (err) {
+    console.error("❌ Network error:", err);
+    alert("Network error occurred.");
+  }
+};
+
+
 
   const nextStep = async () => {
     const fieldsToValidate = stepFields[currentStep];

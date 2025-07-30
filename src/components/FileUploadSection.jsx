@@ -1,12 +1,18 @@
 import { useFormContext } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { UploadCloud } from "lucide-react";
-import { fileValidation } from "../utils/ValidationRules"; 
+import { fileValidation } from "../utils/ValidationRules";
 
 export default function FileUploadSection() {
   const { register, setValue, watch, formState: { errors } } = useFormContext();
   const [fileName, setFileName] = useState(null);
   const file = watch("cv");
+
+  const {
+    ref: inputRef,
+    onChange: rhfOnChange,
+    ...rest
+  } = register("cv", fileValidation);
 
   useEffect(() => {
     if (file && file.length > 0) {
@@ -36,10 +42,12 @@ export default function FileUploadSection() {
             type="file"
             accept=".pdf,.doc,.docx"
             className="hidden"
-            {...register("cv", fileValidation)} 
+            ref={inputRef}
+            {...rest}
             onChange={(e) => {
-              setValue("cv", e.target.files);
-              setFileName(e.target.files?.[0]?.name || null);
+              const fileList = e.target.files;
+              rhfOnChange(e); // 👈 trigger react-hook-form validation and state
+              setFileName(fileList?.[0]?.name || null);
             }}
           />
         </label>
