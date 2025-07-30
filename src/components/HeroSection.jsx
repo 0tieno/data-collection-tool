@@ -11,7 +11,7 @@ export default function HeroSection() {
             Aga Khan Education Services, Kenya.
           </h1>
           <p className="text-lg md:text-xl text-gray-700">
-            Help us capture accurate and up-to-date professional and academic data through this simple form.
+            Help us capture accurate and up-to-date professional and academic data through this form.
           </p>
           <Link
             to="/form"
