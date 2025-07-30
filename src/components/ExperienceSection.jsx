@@ -1,4 +1,5 @@
 import { useFormContext, useFieldArray } from "react-hook-form";
+import { experienceValidation } from "../utils/validationRules";
 
 export default function ExperienceSection() {
   const {
@@ -37,7 +38,7 @@ export default function ExperienceSection() {
               Name of Organization *
             </label>
             <input
-              {...register(`experienceList.${index}.organization`, { required: true })}
+              {...register(`experienceList.${index}.organization`, experienceValidation.organization)}
               className="w-full border border-gray-300 rounded-lg p-2"
               placeholder="E.g. AKESK, XYZ School"
             />
@@ -52,7 +53,7 @@ export default function ExperienceSection() {
               Years of Experience *
             </label>
             <select
-              {...register(`experienceList.${index}.years`, { required: true })}
+              {...register(`experienceList.${index}.years`, experienceValidation.years)}
               className="w-full border border-gray-300 rounded-lg p-2"
             >
               <option value="">Select experience duration</option>
@@ -95,7 +96,7 @@ export default function ExperienceSection() {
           Summary of your professional experience (Chronologically) *
         </label>
         <textarea
-          {...register("experienceSummary", { required: true })}
+          {...register("experienceSummary", experienceValidation.experienceSummary)}
           rows={6}
           placeholder="E.g. 2012–2015: Teacher, St. Mary's School; 2016–2021: Deputy Principal, ABC School"
           className="w-full border border-gray-300 rounded-lg p-3"

@@ -65,3 +65,11 @@ export const educationValidation = {
   otherEducation: textareaOptional("Other education", 300),
   otherSkills: textareaOptional("Other skills", 500),
 };
+
+// === Grouped Schema for Experience Section ===
+export const experienceValidation = {
+  organization: textRequired("Organization"),
+  years: selectRequired("Years of Experience"),
+  experienceSummary: textareaRequired("Experience summary", 10, 1000),
+};
+
