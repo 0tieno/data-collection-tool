@@ -1,5 +1,5 @@
 import { useFormContext, useFieldArray } from "react-hook-form";
-import { experienceValidation } from "../utils/validationRules";
+import { experienceValidation } from "../utils/ValidationRules";
 
 export default function ExperienceSection() {
   const {

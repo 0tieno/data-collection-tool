@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { educationValidation } from "../utils/validationRules";
+import { educationValidation } from "../utils/ValidationRules";
 
 export default function EducationSection() {
   const {
