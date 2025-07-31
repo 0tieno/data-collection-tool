@@ -20,13 +20,14 @@ const AdminDashboard = () => {
   useEffect(() => {
     setLoading(true);
     fetch("http://localhost:7071/api/getsubmissions")
-      .then((res) => res.json())
-      .then((data) => {
-        const sorted = data.sort((a, b) => new Date(b._ts) - new Date(a._ts));
-        setSubmissions(sorted);
-        setFiltered(sorted);
-        setLoading(false);
-      })
+  .then((res) => res.json())
+  .then((data) => {
+    const sorted = data.data.sort((a, b) => new Date(b._ts) - new Date(a._ts));
+    setSubmissions(sorted);
+    setFiltered(sorted);
+    setLoading(false);
+  })
+
       .catch((err) => {
         console.error("❌ Fetch error:", err);
         setLoading(false);
