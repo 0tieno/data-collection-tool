@@ -22,7 +22,7 @@ export async function POST(context, req) {
 
     // ✅ Convert raw body to stream
     const bufferStream = new Readable();
-    bufferStream.push(req.body); // req.body must be set with rawBody enabled
+    bufferStream.push(context.req.body); 
     bufferStream.push(null);
     bufferStream.headers = req.headers;
 

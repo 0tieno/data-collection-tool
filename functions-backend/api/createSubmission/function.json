@@ -2,12 +2,13 @@
   "scriptFile": "index.js",
   "bindings": [
     {
-      "authLevel": "function",
+      "authLevel": "anonymous",
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
       "methods": ["post"],
-      "route": "submit"
+      "route": "submit",
+      "rawBody": true
     },
     {
       "type": "http",

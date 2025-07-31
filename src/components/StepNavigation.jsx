@@ -1,6 +1,5 @@
-// src/components/StepNavigation.jsx
-
 import { useFormContext, useFormState, useWatch } from "react-hook-form";
+
 
 export default function StepNavigation({
   currentStep,
@@ -9,6 +8,7 @@ export default function StepNavigation({
   onPrev,
   onNext,
   isLastStep,
+  isSubmitting, // ✅ NEW prop
 }) {
   const { control, getValues, trigger } = useFormContext();
   const watchedValues = useWatch({ control });
@@ -20,17 +20,14 @@ export default function StepNavigation({
     return fieldsToCheck.every((field) => {
       const value = getValues(field);
 
-      // ✅ Check for file upload (cv)
       if (field === "cv") {
         return value?.[0] instanceof File;
       }
 
-      // ✅ Check for experience summary text
       if (field === "experienceSummary") {
         return typeof value === "string" && value.trim().length > 0;
       }
 
-      // ✅ Check for dynamic array like experienceList
       if (Array.isArray(value)) {
         return (
           value.length > 0 &&
@@ -38,7 +35,6 @@ export default function StepNavigation({
         );
       }
 
-      // ✅ General check for other fields
       return value !== undefined && value !== null && value !== "";
     });
   };
@@ -75,9 +71,36 @@ export default function StepNavigation({
       ) : (
         <button
           type="submit"
-          className="px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition"
+          className="px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition inline-flex items-center justify-center gap-2"
+          disabled={isSubmitting}
         >
-          Submit
+          {isSubmitting ? (
+            <>
+              <svg
+                className="animate-spin h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                ></path>
+              </svg>
+              Submitting...
+            </>
+          ) : (
+            "Submit"
+          )}
         </button>
       )}
     </div>

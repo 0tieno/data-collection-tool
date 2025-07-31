@@ -20,62 +20,60 @@ export default function FormWrapper() {
   ];
 
   const [currentStep, setCurrentStep] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false); // ✅ NEW state
   const isLastStep = currentStep === steps.length - 1;
 
   const onSubmit = async (data) => {
-  const formData = new FormData();
+    const formData = new FormData();
 
-  for (const [key, value] of Object.entries(data)) {
-    if (key === "experienceList") {
-      formData.append(key, JSON.stringify(value));
-    } else if (value instanceof FileList) {
-      formData.append(key, value[0]); // Only one file
-    } else {
-      formData.append(key, value);
+    for (const [key, value] of Object.entries(data)) {
+      if (key === "experienceList") {
+        formData.append(key, JSON.stringify(value));
+      } else if (value instanceof FileList) {
+        formData.append(key, value[0]); // Only one file
+      } else {
+        formData.append(key, value);
+      }
     }
-  }
 
-  try {
-    const res = await fetch("http://localhost:7071/api/submit", {
-      method: "POST",
-      body: formData,
-    });
-// https://form-handler-function-d6cje2fghrc2hecy.southafricanorth-01.azurewebsites.net/api/submit
-    const text = await res.text(); // ← use text first
+    setIsSubmitting(true); // ✅ Start spinner
 
-    let json;
     try {
-      json = JSON.parse(text);
+      const res = await fetch("http://localhost:7071/api/submit", {
+        method: "POST",
+        body: formData,
+      });
+
+      const text = await res.text();
+      let json;
+
+      try {
+        json = JSON.parse(text);
+      } catch (err) {
+        console.error("❌ Response is not valid JSON:", text);
+        return;
+      }
+
+      if (!res.ok) {
+        console.error("❌ Server error:", json);
+        if (json.errors) {
+          const messages = Object.values(json.errors).join("\n");
+          alert("Submission failed:\n" + messages);
+        } else {
+          alert("Submission failed: " + (json?.error || "Unknown error"));
+        }
+        return;
+      }
+
+      console.log("✅ Success:", json);
+      alert("Submitted successfully!");
     } catch (err) {
-      console.error("❌ Response is not valid JSON:", text);
-      return;
+      console.error("❌ Network error:", err);
+      alert("Network error occurred.");
+    } finally {
+      setIsSubmitting(false); // ✅ Stop spinner
     }
-
-  if (!res.ok) {
-  console.error("❌ Server error:", json);
-
-  // If it's validation errors (multiple fields), format them nicely
-  if (json.errors) {
-    const messages = Object.values(json.errors).join("\n");
-    alert("Submission failed:\n" + messages);
-  } else {
-    alert("Submission failed: " + (json?.error || "Unknown error"));
-  }
-
-  return;
-}
-
-
-    console.log("✅ Success:", json);
-    alert("Submitted successfully!");
-
-  } catch (err) {
-    console.error("❌ Network error:", err);
-    alert("Network error occurred.");
-  }
-};
-
-
+  };
 
   const nextStep = async () => {
     const fieldsToValidate = stepFields[currentStep];
@@ -132,6 +130,7 @@ export default function FormWrapper() {
           isLastStep={isLastStep}
           onPrev={prevStep}
           onNext={nextStep}
+          isSubmitting={isSubmitting} // ✅ pass this to show spinner
         />
       </form>
     </FormProvider>
