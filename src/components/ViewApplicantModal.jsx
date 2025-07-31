@@ -4,56 +4,69 @@ const ViewApplicantModal = ({ applicant, onClose }) => {
   if (!applicant) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white rounded-lg p-6 w-full max-w-2xl shadow-xl relative">
+    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in">
+      <div className="bg-white text-gray-900 rounded-xl p-6 w-full max-w-3xl shadow-2xl relative border border-gray-200 transition-all duration-300 ease-in-out">
+        {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 text-gray-500 hover:text-red-500 text-xl"
+          className="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-2xl font-semibold"
         >
           &times;
         </button>
 
-        <h2 className="text-xl font-bold mb-4">Applicant Details</h2>
+        {/* Title */}
+        <h2 className="text-2xl font-semibold mb-6 text-blue-600">📄 Applicant Details</h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-          <div><strong>Name:</strong> {applicant.name}</div>
-          <div><strong>Job Title:</strong> {applicant.jobTitle}</div>
-          <div><strong>Job Type:</strong> {applicant.jobType}</div>
-          <div><strong>Supervisor:</strong> {applicant.supervisor}</div>
-          <div><strong>Department:</strong> {applicant.department}</div>
-          <div><strong>Section:</strong> {applicant.section}</div>
-          <div><strong>School:</strong> {applicant.school}</div>
-          <div><strong>Location:</strong> {applicant.location}</div>
-          <div><strong>Country:</strong> {applicant.country}</div>
-          <div><strong>Education Level:</strong> {applicant.educationLevel}</div>
-          <div><strong>Qualifications:</strong> {applicant.qualifications || "—"}</div>
-          <div><strong>Other Education:</strong> {applicant.otherEducation || "—"}</div>
-          <div><strong>Other Skills:</strong> {applicant.otherSkills || "—"}</div>
-          <div className="col-span-full"><strong>Experience Summary:</strong> {applicant.experienceSummary}</div>
-          <div className="col-span-full">
-            <strong>Experience List:</strong>
-            <ul className="list-disc ml-6">
-              {Array.isArray(applicant.experienceList) &&
-                applicant.experienceList.map((exp, idx) => (
+        {/* Grid Details */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-sm">
+          <Info label="Name" value={applicant.name} />
+          <Info label="Job Title" value={applicant.jobTitle} />
+          <Info label="Job Type" value={applicant.jobType} />
+          <Info label="Supervisor" value={applicant.supervisor} />
+          <Info label="Department" value={applicant.department} />
+          <Info label="Section" value={applicant.section} />
+          <Info label="School" value={applicant.school} />
+          <Info label="Location" value={applicant.location} />
+          <Info label="Country" value={applicant.country} />
+          <Info label="Education Level" value={applicant.educationLevel} />
+          <Info label="Qualifications" value={applicant.qualifications || "—"} />
+          <Info label="Other Education" value={applicant.otherEducation || "—"} />
+          <Info label="Other Skills" value={applicant.otherSkills || "—"} />
+
+          {/* Experience Summary */}
+          <div className="sm:col-span-2">
+            <span className="block text-gray-600 font-semibold mb-1">Experience Summary:</span>
+            <p>{applicant.experienceSummary}</p>
+          </div>
+
+          {/* Experience List */}
+          {Array.isArray(applicant.experienceList) && applicant.experienceList.length > 0 && (
+            <div className="sm:col-span-2">
+              <span className="block text-gray-600 font-semibold mb-1">Experience List:</span>
+              <ul className="list-disc ml-6 space-y-1">
+                {applicant.experienceList.map((exp, idx) => (
                   <li key={idx}>
-                    {exp.organization} — {exp.years}
+                    <strong>{exp.organization}</strong> — {exp.years}
                   </li>
                 ))}
-            </ul>
-          </div>
-          <div className="col-span-full">
-            <strong>CV:</strong>{" "}
+              </ul>
+            </div>
+          )}
+
+          {/* CV Download */}
+          <div className="sm:col-span-2">
+            <span className="block text-gray-600 font-semibold mb-1">CV:</span>
             {applicant.cvBlobUrl ? (
               <a
                 href={applicant.cvBlobUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-500 underline"
+                className="inline-block text-blue-600 hover:underline font-medium"
               >
-                Download CV
+                📎 Download CV
               </a>
             ) : (
-              "No CV uploaded"
+              <span className="text-gray-500 italic">No CV uploaded</span>
             )}
           </div>
         </div>
@@ -61,5 +74,13 @@ const ViewApplicantModal = ({ applicant, onClose }) => {
     </div>
   );
 };
+
+// Reusable info block
+const Info = ({ label, value }) => (
+  <div>
+    <span className="block text-gray-600 font-semibold mb-1">{label}:</span>
+    <span>{value}</span>
+  </div>
+);
 
 export default ViewApplicantModal;
