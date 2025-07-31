@@ -36,7 +36,7 @@ export default function FormWrapper() {
   }
 
   try {
-    const res = await fetch("http://localhost:7071/api/submit", {
+    const res = await fetch("https://form-handler-function-d6cje2fghrc2hecy.southafricanorth-01.azurewebsites.net/api/submit", {
       method: "POST",
       body: formData,
     });
