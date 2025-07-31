@@ -19,7 +19,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch("https://form-handler-function-d6cje2fghrc2hecy.southafricanorth-01.azurewebsites.net/api/getsubmissions")
+    fetch("http://localhost:7071/api/getsubmissions")
       .then((res) => res.json())
       .then((data) => {
         const sorted = data.sort((a, b) => new Date(b._ts) - new Date(a._ts));
