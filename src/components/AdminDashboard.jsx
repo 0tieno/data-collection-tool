@@ -47,11 +47,10 @@ const AdminDashboard = () => {
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
-     <div className="flex justify-between items-center mb-6">
  
   <div className="mb-6">
-  {/* Top Row: Home and Logo aligned at far ends */}
-  <div className="flex justify-between items-center sm:justify-start sm:gap-4">
+  {/* Row: Home left, Logo right */}
+  <div className="flex justify-between items-center">
     <Link
       to="/"
       className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800 transition border border-blue-200 rounded-full px-3 py-1 bg-blue-50"
@@ -59,22 +58,20 @@ const AdminDashboard = () => {
       <Home className="w-4 h-4" /> Home
     </Link>
 
-    {/* Spacer div for sm screens to push logo far right */}
-    <div className="flex-1 hidden sm:block"></div>
+ <img
+  src="/images/verge-logo.png"
+  alt="Logo"
+  className="h-[40px] sm:h-15 w-auto object-contain"
+/>
 
-    <img
-      src="/images/verge-logo.png"
-      alt="Logo"
-      className="h-10 w-auto object-contain"
-    />
   </div>
 
-  {/* Title below, centered on small screens, left on larger */}
-  <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800 mt-4 text-center sm:text-left sm:mt-0">
+  {/* Title: centered below */}
+  <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800 mt-4 text-center">
     Staff Data Submissions
   </h2>
 </div>
-</div>
+
 
 
 
