@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import ViewApplicantModal from "./ViewApplicantModal";
+import { Link } from "react-router-dom";
+import { Home } from "lucide-react";
+import Footer from "./Footer"
 
 const AdminDashboard = () => {
   const [submissions, setSubmissions] = useState([]);
@@ -44,7 +47,29 @@ const AdminDashboard = () => {
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
-      <h2 className="text-3xl font-semibold text-gray-800 mb-6">📥 Applicant Submissions</h2>
+     <div className="flex justify-between items-center mb-6">
+ <div className="flex justify-between items-center mb-6">
+  <div className="flex items-center gap-4">
+    <Link
+      to="/"
+      className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800 transition border border-blue-200 rounded-full px-3 py-1 bg-blue-50"
+    >
+      <Home className="w-4 h-4" /> Home
+    </Link>
+    <h2 className="text-3xl font-semibold text-gray-800"> Staff Data Submissions</h2>
+
+    
+  </div>
+  </div>
+
+  <img
+    src="/images/verge-logo.png"
+    alt="Logo"
+    className="h-15 w-auto object-contain"
+  />
+</div>
+
+
 
       {/* Filters */}
       <div className="flex flex-wrap gap-4 mb-6">
@@ -161,6 +186,7 @@ const AdminDashboard = () => {
 
       {/* Modal */}
       <ViewApplicantModal applicant={selected} onClose={() => setSelected(null)} />
+        <Footer />
     </div>
   );
 };
