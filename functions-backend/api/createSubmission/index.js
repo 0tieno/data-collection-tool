@@ -1,3 +1,7 @@
+import { BlobServiceClient } from "@azure/storage-blob";
+import fs from "fs";
+import path from "path";
+
 import { CosmosClient } from "@azure/cosmos";
 import { validateSubmissionData } from "../validation.js";
 import { IncomingForm } from "formidable";
@@ -7,6 +11,10 @@ const { COSMOS_DB_CONNECTION_STRING, COSMOS_DB_NAME, COSMOS_DB_CONTAINER } = pro
 
 const client = new CosmosClient(COSMOS_DB_CONNECTION_STRING);
 const container = client.database(COSMOS_DB_NAME).container(COSMOS_DB_CONTAINER);
+
+const blobServiceClient = BlobServiceClient.fromConnectionString(process.env.AZURE_STORAGE_CONNECTION_STRING);
+const containerClient = blobServiceClient.getContainerClient("resumes"); 
+
 
 export async function POST(context, req) {
   return new Promise((resolve) => {
@@ -50,10 +58,20 @@ export async function POST(context, req) {
           }
         }
 
-        // ✅ Optional: Add file name if CV is uploaded
+        // ✅ Add file name if CV is uploaded
         const uploadedFile = Array.isArray(files.cv) ? files.cv[0] : files.cv;
         if (uploadedFile) {
-          fields.cvFileName = uploadedFile.originalFilename;
+          const tempFilePath = uploadedFile.filepath;
+const blobName = `${Date.now()}-${uploadedFile.originalFilename}`;
+const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+
+// Upload the file
+await blockBlobClient.uploadFile(tempFilePath);
+
+// Attach blob info to fields
+fields.cvFileName = uploadedFile.originalFilename;
+fields.cvBlobUrl = blockBlobClient.url;
+
         }
 
         context.log("📦 Normalized fields:", fields);

@@ -10,6 +10,7 @@
   "dependencies": {
     "@azure/cosmos": "^4.5.0",
     "@azure/functions": "^4.0.0",
+    "@azure/storage-blob": "^12.28.0",
     "formidable": "^3.5.4"
   },
   "devDependencies": {
